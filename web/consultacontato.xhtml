@@ -9,23 +9,25 @@
     <h:body onload="#{contato.consultar()}">
         <h1> Lista de contatos </h1>
         <hr />
-        <p:dataTable var="ct" value="#{contato.listaContatos}">
-            <p:column headerText="Id">
-                <h:outputText value="#{ct.id}" />
-            </p:column>
-            
-            <p:column headerText="Nome">
-                <h:outputText value="#{ct.nome}" />
-            </p:column>
-            
-            <p:column headerText="Email">
-                <h:outputText value="#{ct.email}" />
-            </p:column>
-            
-            <p:column headerText="Fone">
-                <h:outputText value="#{ct.fone}" />
-            </p:column>
-        </p:dataTable>
+        <h:form>
+            <p:dataTable var="ct" value="#{contato.listaContatos}">
+                <p:column headerText="Editar">
+                    <h:commandLink value="#{ct.id}" action="#{contato.editar(ct.id)}" />
+                </p:column>
+
+                <p:column headerText="Nome">
+                    <h:outputText value="#{ct.nome}" />
+                </p:column>
+
+                <p:column headerText="Email">
+                    <h:outputText value="#{ct.email}" />
+                </p:column>
+
+                <p:column headerText="Fone">
+                    <h:outputText value="#{ct.fone}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>        
     </h:body>
 </html>
 

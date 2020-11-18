@@ -35,6 +35,26 @@ public class Contato {
         this.fone = fone;        
     }
    
+    public Contato consultar(int id){
+        Contato contato = new Contato();
+        Connection con = Conexao.conectar();
+        String sql = "select id, nome, fone, email from contato "+
+                " where id = ?";        
+       try {
+           PreparedStatement stm = con.prepareStatement(sql);
+           stm.setInt(1, id);
+           ResultSet rs = stm.executeQuery();
+           if(rs.next()){
+               contato.setId(rs.getInt("id"));
+               contato.setNome(rs.getString("nome"));
+               contato.setFone(rs.getString("fone"));
+               contato.setEmail(rs.getString("email"));
+           }
+       } catch (SQLException ex) {
+           Logger.getLogger(Contato.class.getName()).log(Level.SEVERE, null, ex);
+       } 
+       return contato;
+    }
    
    
    public boolean salvar(){
@@ -53,6 +73,23 @@ public class Contato {
        return true;
    }
    
+    public boolean alterar(){
+       Connection con = Conexao.conectar();
+       String sql = "update contato set "+
+                    "nome=?, email =?, fone=? " +
+                    " where id = ?";
+       try {
+           PreparedStatement stm = con.prepareStatement(sql);
+           stm.setString(1, this.nome);
+           stm.setString(2, this.email);
+           stm.setString(3, this.fone);
+           stm.setInt(4, this.id);
+           stm.execute();
+       } catch (SQLException ex) {
+           return  false;
+       }      
+       return true;
+   }
    public List<Contato> consultar(){
       List<Contato> lista = new ArrayList<>();
       Connection con = Conexao.conectar();
